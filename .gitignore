@@ -1,0 +1,18 @@
+# build artifacts
+/okpage
+/dist/
+
+# generated status sites and probe history (examples)
+/public/
+/history.jsonl
+
+# test and coverage output
+*.test
+*.out
+coverage.*
+
+# editor noise
+.idea/
+.vscode/
+*.swp
+.DS_Store

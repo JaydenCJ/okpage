@@ -1,0 +1,53 @@
+# Example okpage configuration for a small homelab / SaaS fleet.
+# Copy next to your cron job and adjust the services.
+
+title = "Acme Status"
+
+# Where the static site lands. Push this directory anywhere:
+# GitHub Pages, S3, nginx, a $3 VPS — it is just files.
+output = "public"
+
+# Probe history (JSON lines, safe to rsync/commit) and incident files.
+history = "history.jsonl"
+incidents = "incidents"
+
+# Keep 90 days of history; render 90 daily bars per service.
+retention_days = 90
+days = 90
+
+# Default per-probe timeout; override per service below.
+timeout = "10s"
+
+[[service]]
+name = "Website"
+type = "http"
+url = "https://www.example.test/"
+expect_status = 200
+
+[[service]]
+name = "API"
+type = "http"
+url = "https://api.example.test/health"
+expect_body = "\"status\":\"ok\""
+timeout = "5s"
+
+[[service]]
+name = "CDN edge"
+type = "http"
+url = "https://cdn.example.test/ping"
+method = "HEAD"
+
+[[service]]
+name = "Postgres"
+type = "tcp"
+address = "127.0.0.1:5432"
+
+[[service]]
+name = "SMTP"
+type = "tcp"
+address = "127.0.0.1:25"
+
+[[service]]
+name = "DNS zone"
+type = "dns"
+hostname = "example.test"
